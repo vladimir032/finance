@@ -1,13 +1,23 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+.card {
+  padding: 1rem;
+  margin: 1rem 0;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  max-width: 100%;
+  word-wrap: break-word; /* Альтернативное свойство */
+  word-break: break-word; /* Переносит длинные слова */
+  overflow-wrap: anywhere; /* Гибкий перенос слов */
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+
+.form-input {
+    width: 100%; /* Ensure form inputs take full width */
+    box-sizing: border-box; /* Include padding and border in element's total width */
+}
+
+.badge {
+  font-size: 0.75rem; /* Уменьшаем текст для маленьких экранов */
+  padding: 0.3rem 0.6rem; /* Уменьшаем отступы */
+  border-radius: 8px;
+  margin-left: 5px;
 }

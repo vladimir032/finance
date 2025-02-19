@@ -1,0 +1,26 @@
+.nav-links {
+    display: flex;
+    flex-direction: row;
+    transition: max-height 0.3s ease-in-out;
+  }
+  
+  .nav-links.visible {
+    display: flex; /* Show links when visible */
+  }
+  
+  .hamburger {
+    display: none; /* Hide hamburger by default */
+    cursor: pointer;
+  }
+  
+  /* Responsive styles */
+  @media (max-width: 768px) {
+    .nav-links {
+        display: none; /* Hide links on small screens */
+        flex-direction: column; /* Stack links vertically */
+    }
+  
+    .hamburger {
+        display: block; /* Show hamburger on small screens */
+    }
+  }
