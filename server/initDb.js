@@ -1,6 +1,7 @@
-const sqlite3 = require('sqlite3').verbose();
 const path = require('path');
 const fs = require('fs');
+const { configDotenv } = require('dotenv');
+configDotenv(); // Загрузка переменных окружения из .env файла
 
 // Создание директории для базы данных
 const dbDir = path.join(__dirname, '../src/database');
@@ -9,14 +10,22 @@ if (!fs.existsSync(dbDir)) {
 }
 
 // Подключение к базе данных
-const dbPath = path.join(dbDir, 'helpsp.db');
-const db = new sqlite3.Database(dbPath, (err) => {
-    if (err) {
-        console.error('Ошибка подключения к базе данных:', err);
-        process.exit(1);
-    }
-    console.log('Подключено к SQLite');
+const { Pool } = require('pg');
+
+const pool = new Pool({
+    connectionString: process.env.DATABASE_URL, // Используем переменную окружения
+    ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false // Railway требует SSL
 });
+
+pool.connect()
+    .then(() => console.log('✅ Подключено к PostgreSQL'))
+    .catch(err => {
+        console.error('❌ Ошибка подключения к базе данных:', err);
+        process.exit(1);
+    });
+
+module.exports = pool;
+
 
 // Читаем схему БД
 const schema = fs.readFileSync(path.join(__dirname, '../src/database/schema.sql'), 'utf8');

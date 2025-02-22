@@ -1,26 +1,35 @@
 const express = require('express');
 const cors = require('cors');
-const sqlite3 = require('sqlite3').verbose();
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const path = require('path');
 const app = express();
-const PORT = process.env.PORT || 3007;
+const PORT = process.env.PORT || 8080;
 const JWT_SECRET = 'helpsp-secret-key';
+const { configDotenv } = require('dotenv');
+configDotenv(); // Загрузка переменных окружения из .env файла
 
 // Middleware
 app.use(cors());
 app.use(express.json());
 
 // Database connection
-const dbPath = path.join(__dirname, '../src/database/helpsp.db');
-const db = new sqlite3.Database(dbPath, sqlite3.OPEN_READWRITE | sqlite3.OPEN_CREATE, (err) => {
-    if (err) {
-        console.error('Error connecting to database:', err);
-    } else {
-        console.log('Connected to SQLite database');
-    }
+const { Pool } = require('pg');
+
+const pool = new Pool({
+    connectionString: process.env.DATABASE_URL,
+    ssl: { rejectUnauthorized: false }
 });
+
+pool.connect()
+    .then(() => console.log('✅ Подключено к PostgreSQL'))
+    .catch(err => {
+        console.error('❌ Ошибка подключения:', err);
+        process.exit(1);
+    });
+
+module.exports = pool;
+
 
 // Authentication middleware
 const authenticateToken = (req, res, next) => {
@@ -393,3 +402,19 @@ app.put('/api/admin/site-content', authenticateToken, (req, res) => {
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });
+
+process.on('SIGTERM', () => {
+    console.log('SIGTERM signal received: closing HTTP server');
+    server.close(() => {
+      console.log('HTTP server closed');
+      process.exit(0);
+    });
+  });
+  
+  process.on('SIGINT', () => {
+    console.log('SIGINT signal received: closing HTTP server');
+    server.close(() => {
+      console.log('HTTP server closed');
+      process.exit(0);
+    });
+  });
