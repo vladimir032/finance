@@ -13,7 +13,8 @@ const Home = () => {
     useEffect(() => {
         const fetchStats = async () => {
             try {
-                const response = await axios.get('http://localhost:3007/api/stats');
+                const response = await axios.get('https://server-production-20ac.up.railway.app/api/stats');
+
                 setStats(response.data);
             } catch (error) {
                 console.error('Error fetching stats:', error);

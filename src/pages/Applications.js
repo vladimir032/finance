@@ -27,7 +27,8 @@ const Applications = () => {
 
     const fetchApplications = async () => {
         try {
-            const response = await axios.get('http://localhost:3007/api/applications');
+            const response = await axios.get('https://server-production-20ac.up.railway.app/api/applications');
+
             setApplications(response.data);
             setLoading(false);
         } catch (error) {
@@ -49,7 +50,8 @@ const Applications = () => {
         setError('');
 
         try {
-            await axios.post('http://localhost:3007/api/applications', formData);
+            await axios.post('https://server-production-20ac.up.railway.app/api/applications', formData);
+
             setShowForm(false);
             setFormData({
                 project_name: '',

@@ -19,7 +19,8 @@ const Reviews = () => {
 
     const fetchReviews = async () => {
         try {
-            const response = await axios.get('http://localhost:3007/api/reviews');
+            const response = await axios.get('https://server-production-20ac.up.railway.app/api/reviews');
+
             setReviews(response.data);
             setLoading(false);
         } catch (error) {
@@ -33,7 +34,8 @@ const Reviews = () => {
         setError('');
 
         try {
-            await axios.post('http://localhost:3007/api/reviews', formData);
+            await axios.post('https://server-production-20ac.up.railway.app/api/reviews', formData);
+
             setShowForm(false);
             setFormData({
                 rating: 5,

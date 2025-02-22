@@ -32,19 +32,23 @@ const AdminPanel = () => {
         try {
             switch (activeTab) {
                 case 'applications':
-                    const appResponse = await axios.get('http://localhost:3007/api/admin/applications');
+                    const appResponse = await axios.get('https://server-production-20ac.up.railway.app/api/admin/applications');
+
                     setApplications(appResponse.data);
                     break;
                 case 'reviews':
-                    const reviewResponse = await axios.get('http://localhost:3007/api/admin/reviews');
+                    const reviewResponse = await axios.get('https://server-production-20ac.up.railway.app/api/admin/reviews');
+
                     setReviews(reviewResponse.data);
                     break;
                 case 'users':
-                    const userResponse = await axios.get('http://localhost:3007/api/admin/users');
+                    const userResponse = await axios.get('https://server-production-20ac.up.railway.app/api/admin/users');
+
                     setUsers(userResponse.data);
                     break;
                 case 'content':
-                    const contentResponse = await axios.get('http://localhost:3007/api/admin/site-content');
+                    const contentResponse = await axios.get('https://server-production-20ac.up.railway.app/api/admin/site-content');
+
                     setSiteContent(contentResponse.data);
                     break;
             }
@@ -57,7 +61,8 @@ const AdminPanel = () => {
 
     const handleApplicationUpdate = async (id, status) => {
         try {
-            await axios.put(`http://localhost:3007/api/admin/applications/${id}`, { status });
+            await axios.put(`https://server-production-20ac.up.railway.app/api/admin/applications/${id}`, { status });
+
             fetchData();
         } catch (error) {
             setError('Error updating application');
@@ -66,7 +71,8 @@ const AdminPanel = () => {
 
     const handleReviewUpdate = async (id, data) => {
         try {
-            await axios.put(`http://localhost:3007/api/admin/reviews/${id}`, data);
+            await axios.put(`https://server-production-20ac.up.railway.app/api/admin/reviews/${id}`, data);
+
             setEditingReview(null);
             fetchData();
         } catch (error) {
@@ -77,7 +83,8 @@ const AdminPanel = () => {
     const handleReviewDelete = async (id) => {
         if (!window.confirm('Are you sure you want to delete this review?')) return;
         try {
-            await axios.delete(`http://localhost:3007/api/admin/reviews/${id}`);
+            await axios.delete(`https://server-production-20ac.up.railway.app/api/admin/reviews/${id}`);
+
             fetchData();
         } catch (error) {
             setError('Error deleting review');
@@ -86,7 +93,8 @@ const AdminPanel = () => {
 
     const handleContentUpdate = async (id, data) => {
         try {
-            await axios.put(`http://localhost:3007/api/admin/site-content/${id}`, data);
+            await axios.put(`https://server-production-20ac.up.railway.app/api/admin/site-content/${id}`, data);
+
             setEditingContent(null);
             fetchData();
         } catch (error) {
@@ -104,7 +112,8 @@ const AdminPanel = () => {
 
     const handleBalanceUpdate = async (userId) => {
         try {
-            await axios.put(`http://localhost:3007/api/admin/users/${userId}/balance`, editUserBalance);
+            await axios.put(`https://server-production-20ac.up.railway.app/api/admin/users/${userId}/balance`, editUserBalance);
+
             // Update the users list immediately
             setUsers(prevUsers => prevUsers.map(u => {
                 if (u.id === userId) {

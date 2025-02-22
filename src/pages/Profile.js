@@ -39,7 +39,8 @@ const Profile = () => {
 
     const fetchProfile = async () => {
         try {
-            const response = await axios.get('http://localhost:3007/api/profile');
+            const response = await axios.get('https://server-production-20ac.up.railway.app/api/profile');
+
             setProfile(response.data);
             setLoading(false);
         } catch (error) {
@@ -87,7 +88,8 @@ const Profile = () => {
 
         // Proceed with submission if validation passes
         try {
-            const response = await axios.post('http://localhost:3007/api/cards', cardData);
+            const response = await axios.post('https://server-production-20ac.up.railway.app/api/cards', cardData);
+
             console.log('Card added:', response.data);
             
             // Fetch updated profile data immediately after adding the card
@@ -108,7 +110,8 @@ const Profile = () => {
     const handleDepositSubmit = async (e) => {
         e.preventDefault();
         try {
-            await axios.post('http://localhost:3007/api/transactions/deposit', depositData);
+            await axios.post('https://server-production-20ac.up.railway.app/api/transactions/deposit', depositData);
+
             fetchProfile();
             setDepositData({
                 currency: 'USDT',
@@ -138,7 +141,8 @@ const Profile = () => {
                 return;
             }
             
-            await axios.post('http://localhost:3007/api/transactions/withdraw', withdrawalData);
+            await axios.post('https://server-production-20ac.up.railway.app/api/transactions/withdraw', withdrawalData);
+
             fetchProfile();
             setWithdrawalData({
                 method: 'card',
